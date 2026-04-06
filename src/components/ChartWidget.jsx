@@ -136,12 +136,21 @@ export default function ChartWidget({ data, height = 280, toggles = { kijun129: 
         const formatP = (p) => p.toLocaleString('vi-VN');
         const updateTooltip = (candleData) => {
             if (!tooltipRef.current || !candleData) return;
+
+            const index = data.findIndex(d => d.time === candleData.time);
+            const prevClose = index > 0 ? data[index - 1].close : candleData.open;
+            const diff = candleData.close - prevClose;
+            const pct = prevClose !== 0 ? (diff / prevClose * 100).toFixed(2) : 0;
+            const color = diff >= 0 ? '#00FF87' : '#FF3366';
+            const sign = diff >= 0 ? '+' : '';
+
             tooltipRef.current.style.display = 'flex';
             tooltipRef.current.innerHTML = `
                 <span style="color:var(--text-secondary)">O:</span> ${formatP(candleData.open)}&nbsp;&nbsp;
                 <span style="color:var(--text-secondary)">H:</span> ${formatP(candleData.high)}&nbsp;&nbsp;
                 <span style="color:var(--text-secondary)">L:</span> ${formatP(candleData.low)}&nbsp;&nbsp;
-                <span style="color:var(--text-secondary)">C:</span> ${formatP(candleData.close)}
+                <span style="color:var(--text-secondary)">C:</span> ${formatP(candleData.close)} 
+                <span style="color:${color}; font-weight:500;">(${sign}${pct}%)</span>
             `;
         };
 

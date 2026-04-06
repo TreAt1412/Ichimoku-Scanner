@@ -7,6 +7,14 @@ const roundTick = (v) => Math.floor(v / 50) * 50;
 
 export default function SignalCard({ ticker, data, analysis, onExpand, toggles }) {
     const lastData = data[data.length - 1];
+    const prevData = data.length > 1 ? data[data.length - 2] : lastData;
+    
+    // Tính % thay đổi so với phiên trước
+    const change = lastData.close - prevData.close;
+    const changePercent = prevData.close !== 0 ? (change / prevData.close * 100).toFixed(2) : 0;
+    const isUp = change >= 0;
+    const changeColor = isUp ? '#00FF87' : '#FF3366';
+    const changeSign = isUp ? '+' : '';
     
     const isBuy = analysis.signal === 'BUY';
     const isSell = analysis.signal === 'SELL';
@@ -34,7 +42,12 @@ export default function SignalCard({ ticker, data, analysis, onExpand, toggles }
                             </button>
                         )}
                     </div>
-                    <p style={styles.price} className="mono">{fmtPrice(lastData.close)}</p>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
+                        <p style={styles.price} className="mono">{fmtPrice(lastData.close)}</p>
+                        <span className="mono" style={{ color: changeColor, fontSize: '1rem', fontWeight: '500' }}>
+                            {changeSign}{changePercent}%
+                        </span>
+                    </div>
                 </div>
                 <div style={{
                     ...styles.badge,
