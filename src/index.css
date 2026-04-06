@@ -1,0 +1,69 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-primary: #0A0E17;
+  --bg-secondary: #131A2A;
+  --bg-card: rgba(19, 26, 42, 0.7);
+  
+  --text-primary: #E2E8F0;
+  --text-secondary: #94A3B8;
+  
+  --accent-neon-green: #00FF87;
+  --accent-crimson-red: #FF3366;
+  --accent-gold: #FFC000;
+  
+  --border-color: rgba(255, 255, 255, 0.08);
+  --glow-green: 0 0 15px rgba(0, 255, 135, 0.3);
+  --glow-red: 0 0 15px rgba(255, 51, 102, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+.mono {
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* Glassmorphism utils */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+/* Animations */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.1); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  70% { transform: scale(1); }
+}
+
+.signal-blinker {
+  display: inline-block;
+  animation: heartbeat 2s infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
